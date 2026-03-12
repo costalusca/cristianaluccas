@@ -86,6 +86,75 @@ export type Database = {
         }
         Relationships: []
       }
+      site_settings: {
+        Row: {
+          bride_name: string
+          ceremony_time: string
+          couple_initials: string
+          couple_photo_url: string | null
+          footer_text: string
+          gallery_photo_urls: Json
+          groom_name: string
+          hero_photo_url: string | null
+          id: string
+          party_time: string
+          story_quote: string
+          story_text: string
+          timeline_events: Json
+          updated_at: string
+          venue_address: string
+          venue_map_embed: string
+          venue_map_url: string
+          venue_name: string
+          wedding_date: string
+          welcome_text: string
+        }
+        Insert: {
+          bride_name?: string
+          ceremony_time?: string
+          couple_initials?: string
+          couple_photo_url?: string | null
+          footer_text?: string
+          gallery_photo_urls?: Json
+          groom_name?: string
+          hero_photo_url?: string | null
+          id?: string
+          party_time?: string
+          story_quote?: string
+          story_text?: string
+          timeline_events?: Json
+          updated_at?: string
+          venue_address?: string
+          venue_map_embed?: string
+          venue_map_url?: string
+          venue_name?: string
+          wedding_date?: string
+          welcome_text?: string
+        }
+        Update: {
+          bride_name?: string
+          ceremony_time?: string
+          couple_initials?: string
+          couple_photo_url?: string | null
+          footer_text?: string
+          gallery_photo_urls?: Json
+          groom_name?: string
+          hero_photo_url?: string | null
+          id?: string
+          party_time?: string
+          story_quote?: string
+          story_text?: string
+          timeline_events?: Json
+          updated_at?: string
+          venue_address?: string
+          venue_map_embed?: string
+          venue_map_url?: string
+          venue_name?: string
+          wedding_date?: string
+          welcome_text?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
