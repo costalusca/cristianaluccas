@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const RSVPSection = () => {
   const [form, setForm] = useState({
@@ -12,12 +13,29 @@ const RSVPSection = () => {
     attending: "yes",
     message: "",
   });
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Save to database with Lovable Cloud
-    toast.success("Presença confirmada! Obrigado pela confirmação.");
-    setForm({ name: "", phone: "", email: "", address: "", guests: "1", attending: "yes", message: "" });
+    setLoading(true);
+    try {
+      const { error } = await supabase.from("rsvp_responses").insert({
+        name: form.name.trim(),
+        phone: form.phone.trim(),
+        email: form.email.trim(),
+        address: form.address.trim() || null,
+        guests: parseInt(form.guests),
+        attending: form.attending === "yes",
+        message: form.message.trim() || null,
+      });
+      if (error) throw error;
+      toast.success("Presença confirmada! Obrigado pela confirmação. 💝");
+      setForm({ name: "", phone: "", email: "", address: "", guests: "1", attending: "yes", message: "" });
+    } catch {
+      toast.error("Erro ao enviar. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputClass =
@@ -145,9 +163,10 @@ const RSVPSection = () => {
           <div className="text-center pt-4">
             <button
               type="submit"
-              className="bg-foreground text-background font-body text-sm uppercase tracking-widest px-12 py-4 hover:bg-foreground/90 transition-colors duration-300"
+              disabled={loading}
+              className="bg-foreground text-background font-body text-sm uppercase tracking-widest px-12 py-4 hover:bg-foreground/90 transition-all duration-300 disabled:opacity-50"
             >
-              Enviar Confirmação
+              {loading ? "Enviando..." : "Enviar Confirmação"}
             </button>
           </div>
         </motion.form>
