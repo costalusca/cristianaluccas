@@ -48,7 +48,7 @@ const defaults: SiteSettings = {
   couple_photo_url: null,
   gallery_photo_urls: [],
   welcome_text: "Nós vamos casar",
-  footer_text: "Feito com ❤ para o nosso grande dia",
+  footer_text: "Nosso grande dia.",
 };
 
 export function useSiteSettings() {
