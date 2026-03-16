@@ -31,15 +31,15 @@ export interface SiteSettings {
 
 const defaults: SiteSettings = {
   id: "",
-  groom_name: "João",
-  bride_name: "Maria",
+  groom_name: "Cristiana",
+  bride_name: "Lucas",
   couple_initials: "C & L",
   wedding_date: "2026-06-13T16:00:00Z",
   story_quote: '"O amor não se olha um para o outro, mas juntos na mesma direção."',
   story_text: "Nossa história começou como muitas grandes histórias de amor — por acaso.",
   timeline_events: [],
-  venue_name: "Espaço Villa Jardim",
-  venue_address: "Rua das Flores, 1234",
+  venue_name: "Casa Fróes",
+  venue_address: "Alameda Jandira Fróes, 42 - São Francisco, Niterói - RJ, 24360-017",
   ceremony_time: "16h00",
   party_time: "18h00",
   venue_map_url: "",
@@ -48,7 +48,7 @@ const defaults: SiteSettings = {
   couple_photo_url: null,
   gallery_photo_urls: [],
   welcome_text: "Nós vamos casar",
-  footer_text: "Feito com ❤ para o nosso grande dia",
+  footer_text: "Nosso grande dia.",
 };
 
 export function useSiteSettings() {
