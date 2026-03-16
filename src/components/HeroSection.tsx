@@ -31,7 +31,7 @@ const HeroSection = () => {
   }, []);
 
   const weddingDate = new Date(settings.wedding_date);
-  const dateStr = weddingDate.toLocaleDateString("pt-BR", { day: "numeric", month: "long", year: "numeric" });
+  const dateStr = weddingDate.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" }).replace(/\//g, " / ");
 
   if (loading) return <div className="min-h-screen bg-background" />;
 

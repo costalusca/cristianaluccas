@@ -34,7 +34,7 @@ const defaults: SiteSettings = {
   groom_name: "João",
   bride_name: "Maria",
   couple_initials: "C & L",
-  wedding_date: "2026-08-15T16:00:00Z",
+  wedding_date: "2026-06-13T16:00:00Z",
   story_quote: '"O amor não se olha um para o outro, mas juntos na mesma direção."',
   story_text: "Nossa história começou como muitas grandes histórias de amor — por acaso.",
   timeline_events: [],
