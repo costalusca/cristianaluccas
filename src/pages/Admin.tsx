@@ -361,22 +361,21 @@ const Admin = () => {
               {gifts.map((g) => (
                 <div key={g.id} className={`border border-border p-6 ${g.purchased ? "bg-muted/20" : ""}`}>
                   <div className="flex items-start justify-between mb-3">
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <span className="text-2xl mr-2">{g.icon}</span>
                       <span className="font-display text-lg text-foreground">{g.name}</span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 shrink-0">
                       <span className="font-display text-lg text-gold">R$ {Number(g.value).toLocaleString("pt-BR")}</span>
-                      {!g.purchased && (
-                        <button onClick={() => deleteGift(g.id)} className="text-muted-foreground hover:text-destructive transition-colors">
-                          <Trash2 size={14} />
-                        </button>
-                      )}
+                      <button onClick={() => deleteGift(g.id)} className="text-muted-foreground hover:text-destructive transition-colors">
+                        <Trash2 size={14} />
+                      </button>
                     </div>
                   </div>
+                  {g.description && <p className="font-body text-xs text-muted-foreground mb-2">{g.description}</p>}
                   {g.purchased ? (
                     <div className="font-body text-xs text-muted-foreground">
-                      <p>✅ Presenteado por: {g.purchased_by}</p>
+                      <p>✅ Presenteado{g.purchased_by ? ` por: ${g.purchased_by}` : ""}</p>
                       {g.purchased_at && <p>Em: {new Date(g.purchased_at).toLocaleDateString("pt-BR")}</p>}
                     </div>
                   ) : (
@@ -385,6 +384,33 @@ const Admin = () => {
                       {g.payment_url && <p className="truncate mt-1">🔗 {g.payment_url}</p>}
                     </div>
                   )}
+                  {/* Inline edit */}
+                  <details className="mt-3">
+                    <summary className="font-body text-xs text-muted-foreground cursor-pointer hover:text-foreground transition-colors">✏️ Editar</summary>
+                    <div className="mt-2 space-y-2">
+                      <input value={g.name} onChange={(e) => setGifts(gifts.map(gi => gi.id === g.id ? { ...gi, name: e.target.value } : gi))} className={inputClass} placeholder="Nome" />
+                      <input value={g.description || ""} onChange={(e) => setGifts(gifts.map(gi => gi.id === g.id ? { ...gi, description: e.target.value } : gi))} className={inputClass} placeholder="Descrição" />
+                      <input type="number" value={g.value} onChange={(e) => setGifts(gifts.map(gi => gi.id === g.id ? { ...gi, value: Number(e.target.value) } : gi))} className={inputClass} placeholder="Valor" />
+                      <input value={g.icon || "🎁"} onChange={(e) => setGifts(gifts.map(gi => gi.id === g.id ? { ...gi, icon: e.target.value } : gi))} className={inputClass} placeholder="Emoji" />
+                      <input value={g.payment_url || ""} onChange={(e) => setGifts(gifts.map(gi => gi.id === g.id ? { ...gi, payment_url: e.target.value } : gi))} className={inputClass} placeholder="Link de pagamento" />
+                      <div className="flex gap-2">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input type="checkbox" checked={g.purchased} onChange={(e) => setGifts(gifts.map(gi => gi.id === g.id ? { ...gi, purchased: e.target.checked } : gi))} />
+                          <span className="font-body text-xs">Presenteado</span>
+                        </label>
+                      </div>
+                      <button onClick={async () => {
+                        const { error } = await supabase.from("gifts").update({
+                          name: g.name, description: g.description, value: g.value,
+                          icon: g.icon, payment_url: g.payment_url, purchased: g.purchased,
+                        }).eq("id", g.id);
+                        if (error) toast.error("Erro ao salvar.");
+                        else toast.success("Presente atualizado!");
+                      }} className="bg-foreground text-background px-4 py-1.5 font-body text-xs uppercase tracking-widest hover:bg-foreground/90 transition-colors">
+                        Salvar
+                      </button>
+                    </div>
+                  </details>
                 </div>
               ))}
             </div>
@@ -517,7 +543,16 @@ const Admin = () => {
                   <input value={settings.venue_name} onChange={(e) => setSettings({ ...settings, venue_name: e.target.value })} className={inputClass} />
                 </div>
                 <div><label className={labelClass}>Endereço</label>
-                  <input value={settings.venue_address} onChange={(e) => setSettings({ ...settings, venue_address: e.target.value })} className={inputClass} />
+                  <input value={settings.venue_address} onChange={(e) => {
+                    const addr = e.target.value;
+                    const encoded = encodeURIComponent(addr);
+                    setSettings({
+                      ...settings,
+                      venue_address: addr,
+                      venue_map_url: `https://www.google.com/maps/search/?api=1&query=${encoded}`,
+                      venue_map_embed: `https://www.google.com/maps?q=${encoded}&output=embed`,
+                    });
+                  }} className={inputClass} />
                 </div>
                 <div><label className={labelClass}>Horário da Cerimônia</label>
                   <input value={settings.ceremony_time} onChange={(e) => setSettings({ ...settings, ceremony_time: e.target.value })} className={inputClass} />
@@ -525,13 +560,18 @@ const Admin = () => {
                 <div><label className={labelClass}>Horário da Festa</label>
                   <input value={settings.party_time} onChange={(e) => setSettings({ ...settings, party_time: e.target.value })} className={inputClass} />
                 </div>
-                <div><label className={labelClass}>Link do Google Maps</label>
-                  <input value={settings.venue_map_url} onChange={(e) => setSettings({ ...settings, venue_map_url: e.target.value })} className={inputClass} />
+                <div><label className={labelClass}>Link do Google Maps (auto-gerado)</label>
+                  <input value={settings.venue_map_url} onChange={(e) => setSettings({ ...settings, venue_map_url: e.target.value })} className={inputClass} placeholder="Gerado automaticamente ao alterar endereço" />
                 </div>
-                <div><label className={labelClass}>Embed do Google Maps</label>
-                  <input value={settings.venue_map_embed} onChange={(e) => setSettings({ ...settings, venue_map_embed: e.target.value })} className={inputClass} />
+                <div><label className={labelClass}>Embed do Google Maps (auto-gerado)</label>
+                  <input value={settings.venue_map_embed} onChange={(e) => setSettings({ ...settings, venue_map_embed: e.target.value })} className={inputClass} placeholder="Gerado automaticamente ao alterar endereço" />
                 </div>
               </div>
+              {settings.venue_map_embed && (
+                <div className="mt-4 h-[200px] border border-border overflow-hidden">
+                  <iframe src={settings.venue_map_embed} width="100%" height="100%" style={{ border: 0 }} loading="lazy" title="Preview do mapa" />
+                </div>
+              )}
             </section>
 
             {/* Footer */}

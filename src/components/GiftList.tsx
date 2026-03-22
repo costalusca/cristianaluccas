@@ -75,7 +75,7 @@ const GiftList = () => {
                 </span>
               ) : gift.payment_url ? (
                 <a
-                  href={gift.payment_url}
+                  href={gift.payment_url.startsWith("http") ? gift.payment_url : `https://${gift.payment_url}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-foreground text-background font-body text-sm uppercase tracking-widest px-8 py-3 hover:bg-foreground/90 transition-colors duration-300"
@@ -83,8 +83,8 @@ const GiftList = () => {
                   <Heart size={14} /> Presentear
                 </a>
               ) : (
-                <span className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground">
-                  <Heart size={14} /> Presentear
+                <span className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground cursor-not-allowed opacity-50">
+                  <Heart size={14} /> Sem link de pagamento
                 </span>
               )}
             </motion.div>
