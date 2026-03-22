@@ -325,7 +325,7 @@ const Admin = () => {
             {/* Add gift form */}
             <div className="border border-border p-6 mb-6">
               <h3 className="font-display text-lg text-foreground mb-4">Adicionar Presente</h3>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div>
                   <label className={labelClass}>Emoji</label>
                   <input value={newGift.icon} onChange={(e) => setNewGift({ ...newGift, icon: e.target.value })} className={inputClass} />
@@ -340,13 +340,19 @@ const Admin = () => {
                 </div>
                 <div>
                   <label className={labelClass}>Valor (R$)</label>
-                  <div className="flex gap-2">
-                    <input type="number" value={newGift.value} onChange={(e) => setNewGift({ ...newGift, value: e.target.value })} className={inputClass} />
-                    <button onClick={addGift}
-                      className="shrink-0 bg-foreground text-background px-4 py-2 font-body text-sm hover:bg-foreground/90 transition-colors">
-                      <Plus size={16} />
-                    </button>
-                  </div>
+                  <input type="number" value={newGift.value} onChange={(e) => setNewGift({ ...newGift, value: e.target.value })} className={inputClass} />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <label className={labelClass}>Link de Pagamento (Pix / URL externa)</label>
+                  <input value={newGift.payment_url} onChange={(e) => setNewGift({ ...newGift, payment_url: e.target.value })} className={inputClass} placeholder="https://... ou chave Pix" />
+                </div>
+                <div className="flex items-end">
+                  <button onClick={addGift}
+                    className="bg-foreground text-background px-6 py-2 font-body text-sm uppercase tracking-widest hover:bg-foreground/90 transition-colors">
+                    <Plus size={14} className="inline mr-2" /> Adicionar
+                  </button>
                 </div>
               </div>
             </div>
@@ -374,7 +380,10 @@ const Admin = () => {
                       {g.purchased_at && <p>Em: {new Date(g.purchased_at).toLocaleDateString("pt-BR")}</p>}
                     </div>
                   ) : (
-                    <p className="font-body text-xs text-muted-foreground">Disponível</p>
+                    <div className="font-body text-xs text-muted-foreground">
+                      <p>Disponível</p>
+                      {g.payment_url && <p className="truncate mt-1">🔗 {g.payment_url}</p>}
+                    </div>
                   )}
                 </div>
               ))}
