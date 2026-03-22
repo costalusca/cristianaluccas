@@ -26,6 +26,7 @@ interface GiftItem {
   purchased: boolean;
   purchased_by: string | null;
   purchased_at: string | null;
+  payment_url: string | null;
 }
 
 interface SiteSettingsData {
@@ -66,7 +67,7 @@ const Admin = () => {
   const navigate = useNavigate();
 
   // New gift form
-  const [newGift, setNewGift] = useState({ name: "", description: "", value: "", icon: "🎁" });
+  const [newGift, setNewGift] = useState({ name: "", description: "", value: "", icon: "🎁", payment_url: "" });
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
@@ -103,9 +104,9 @@ const Admin = () => {
   const handleLogout = async () => { await supabase.auth.signOut(); navigate("/login"); };
 
   const exportCSV = () => {
-    const headers = ["Nome", "Telefone", "Email", "Endereço", "Convidados", "Confirmou", "Mensagem", "Data"];
+    const headers = ["Nome", "Telefone", "Email", "Endereço", "Confirmou", "Mensagem", "Data"];
     const rows = rsvps.map((r) => [
-      r.name, r.phone, r.email, r.address || "", r.guests,
+      r.name, r.phone, r.email, r.address || "",
       r.attending ? "Sim" : "Não", r.message || "",
       new Date(r.created_at).toLocaleDateString("pt-BR"),
     ]);
@@ -197,11 +198,12 @@ const Admin = () => {
       description: newGift.description || null,
       value: parseFloat(newGift.value),
       icon: newGift.icon || "🎁",
+      payment_url: newGift.payment_url || null,
     });
     if (error) toast.error("Erro ao adicionar.");
     else {
       toast.success("Presente adicionado!");
-      setNewGift({ name: "", description: "", value: "", icon: "🎁" });
+      setNewGift({ name: "", description: "", value: "", icon: "🎁", payment_url: "" });
       fetchData();
     }
   };
@@ -214,7 +216,7 @@ const Admin = () => {
 
   const confirmed = rsvps.filter((r) => r.attending);
   const declined = rsvps.filter((r) => !r.attending);
-  const totalGuests = confirmed.reduce((sum, r) => sum + r.guests, 0);
+  const totalGuests = confirmed.length;
 
   if (loading) {
     return <div className="min-h-screen bg-background flex items-center justify-center">
@@ -287,7 +289,7 @@ const Admin = () => {
               <table className="w-full text-left">
                 <thead>
                   <tr className="border-b border-border">
-                    {["Nome", "Telefone", "Email", "Convidados", "Status", "Mensagem", "Data"].map((h) => (
+                    {["Nome", "Telefone", "Email", "Status", "Mensagem", "Data"].map((h) => (
                       <th key={h} className="font-body text-xs uppercase tracking-widest text-muted-foreground py-3 px-4">{h}</th>
                     ))}
                   </tr>
@@ -298,7 +300,6 @@ const Admin = () => {
                       <td className="py-3 px-4 font-body text-sm text-foreground">{r.name}</td>
                       <td className="py-3 px-4 font-body text-sm text-muted-foreground">{r.phone}</td>
                       <td className="py-3 px-4 font-body text-sm text-muted-foreground">{r.email}</td>
-                      <td className="py-3 px-4 font-body text-sm text-foreground">{r.guests}</td>
                       <td className="py-3 px-4">
                         <span className={`inline-flex items-center gap-1 font-body text-xs uppercase tracking-widest ${
                           r.attending ? "text-green-600" : "text-destructive"}`}>
@@ -310,7 +311,7 @@ const Admin = () => {
                     </tr>
                   ))}
                   {rsvps.length === 0 && (
-                    <tr><td colSpan={7} className="py-8 text-center font-body text-sm text-muted-foreground">Nenhuma confirmação ainda.</td></tr>
+                    <tr><td colSpan={6} className="py-8 text-center font-body text-sm text-muted-foreground">Nenhuma confirmação ainda.</td></tr>
                   )}
                 </tbody>
               </table>
@@ -324,7 +325,7 @@ const Admin = () => {
             {/* Add gift form */}
             <div className="border border-border p-6 mb-6">
               <h3 className="font-display text-lg text-foreground mb-4">Adicionar Presente</h3>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div>
                   <label className={labelClass}>Emoji</label>
                   <input value={newGift.icon} onChange={(e) => setNewGift({ ...newGift, icon: e.target.value })} className={inputClass} />
@@ -339,13 +340,19 @@ const Admin = () => {
                 </div>
                 <div>
                   <label className={labelClass}>Valor (R$)</label>
-                  <div className="flex gap-2">
-                    <input type="number" value={newGift.value} onChange={(e) => setNewGift({ ...newGift, value: e.target.value })} className={inputClass} />
-                    <button onClick={addGift}
-                      className="shrink-0 bg-foreground text-background px-4 py-2 font-body text-sm hover:bg-foreground/90 transition-colors">
-                      <Plus size={16} />
-                    </button>
-                  </div>
+                  <input type="number" value={newGift.value} onChange={(e) => setNewGift({ ...newGift, value: e.target.value })} className={inputClass} />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <label className={labelClass}>Link de Pagamento (Pix / URL externa)</label>
+                  <input value={newGift.payment_url} onChange={(e) => setNewGift({ ...newGift, payment_url: e.target.value })} className={inputClass} placeholder="https://... ou chave Pix" />
+                </div>
+                <div className="flex items-end">
+                  <button onClick={addGift}
+                    className="bg-foreground text-background px-6 py-2 font-body text-sm uppercase tracking-widest hover:bg-foreground/90 transition-colors">
+                    <Plus size={14} className="inline mr-2" /> Adicionar
+                  </button>
                 </div>
               </div>
             </div>
@@ -373,7 +380,10 @@ const Admin = () => {
                       {g.purchased_at && <p>Em: {new Date(g.purchased_at).toLocaleDateString("pt-BR")}</p>}
                     </div>
                   ) : (
-                    <p className="font-body text-xs text-muted-foreground">Disponível</p>
+                    <div className="font-body text-xs text-muted-foreground">
+                      <p>Disponível</p>
+                      {g.payment_url && <p className="truncate mt-1">🔗 {g.payment_url}</p>}
+                    </div>
                   )}
                 </div>
               ))}
