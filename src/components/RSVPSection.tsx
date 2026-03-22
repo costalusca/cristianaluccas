@@ -9,7 +9,6 @@ const RSVPSection = () => {
     phone: "",
     email: "",
     address: "",
-    guests: "1",
     attending: "yes",
     message: "",
   });
@@ -24,13 +23,13 @@ const RSVPSection = () => {
         phone: form.phone.trim(),
         email: form.email.trim(),
         address: form.address.trim() || null,
-        guests: parseInt(form.guests),
+        guests: 1,
         attending: form.attending === "yes",
         message: form.message.trim() || null,
       });
       if (error) throw error;
       toast.success("Presença confirmada! Obrigado pela confirmação. 💝");
-      setForm({ name: "", phone: "", email: "", address: "", guests: "1", attending: "yes", message: "" });
+      setForm({ name: "", phone: "", email: "", address: "", attending: "yes", message: "" });
     } catch {
       toast.error("Erro ao enviar. Tente novamente.");
     } finally {
@@ -104,51 +103,33 @@ const RSVPSection = () => {
             className={inputClass}
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <label className="font-body text-xs uppercase tracking-widest text-muted-foreground mb-2 block">
-                Quantidade de Convidados
+          <div>
+            <label className="font-body text-xs uppercase tracking-widest text-muted-foreground mb-2 block">
+              Confirmação
+            </label>
+            <div className="flex gap-6 pt-3">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="attending"
+                  value="yes"
+                  checked={form.attending === "yes"}
+                  onChange={(e) => setForm({ ...form, attending: e.target.value })}
+                  className="accent-gold"
+                />
+                <span className="font-body text-sm text-foreground">Vou ao casamento</span>
               </label>
-              <select
-                value={form.guests}
-                onChange={(e) => setForm({ ...form, guests: e.target.value })}
-                className={`${inputClass} bg-transparent`}
-              >
-                {[1, 2, 3, 4, 5].map((n) => (
-                  <option key={n} value={n} className="bg-card text-foreground">
-                    {n} {n === 1 ? "pessoa" : "pessoas"}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="font-body text-xs uppercase tracking-widest text-muted-foreground mb-2 block">
-                Confirmação
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="attending"
+                  value="no"
+                  checked={form.attending === "no"}
+                  onChange={(e) => setForm({ ...form, attending: e.target.value })}
+                  className="accent-gold"
+                />
+                <span className="font-body text-sm text-foreground">Não poderei ir</span>
               </label>
-              <div className="flex gap-6 pt-3">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="attending"
-                    value="yes"
-                    checked={form.attending === "yes"}
-                    onChange={(e) => setForm({ ...form, attending: e.target.value })}
-                    className="accent-gold"
-                  />
-                  <span className="font-body text-sm text-foreground">Vou ao casamento</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="attending"
-                    value="no"
-                    checked={form.attending === "no"}
-                    onChange={(e) => setForm({ ...form, attending: e.target.value })}
-                    className="accent-gold"
-                  />
-                  <span className="font-body text-sm text-foreground">Não poderei ir</span>
-                </label>
-              </div>
             </div>
           </div>
 

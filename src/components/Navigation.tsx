@@ -5,7 +5,6 @@ import { useSiteSettings } from "@/hooks/use-site-settings";
 
 const navItems = [
   { label: "Início", href: "#inicio" },
-  { label: "Nossa História", href: "#historia" },
   { label: "RSVP", href: "#rsvp" },
   { label: "Presentes", href: "#presentes" },
   { label: "Local", href: "#local" },
