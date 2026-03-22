@@ -21,6 +21,7 @@ export type Database = {
           icon: string | null
           id: string
           name: string
+          payment_url: string | null
           purchased: boolean
           purchased_at: string | null
           purchased_by: string | null
@@ -32,6 +33,7 @@ export type Database = {
           icon?: string | null
           id?: string
           name: string
+          payment_url?: string | null
           purchased?: boolean
           purchased_at?: string | null
           purchased_by?: string | null
@@ -43,6 +45,7 @@ export type Database = {
           icon?: string | null
           id?: string
           name?: string
+          payment_url?: string | null
           purchased?: boolean
           purchased_at?: string | null
           purchased_by?: string | null

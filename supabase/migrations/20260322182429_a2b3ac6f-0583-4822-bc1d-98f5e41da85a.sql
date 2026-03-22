@@ -1,0 +1,1 @@
+ALTER TABLE public.gifts ADD COLUMN payment_url text DEFAULT NULL;
