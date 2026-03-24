@@ -15,7 +15,7 @@ const Footer = () => {
       <div className="container mx-auto px-6 text-center">
         <p className="font-display text-3xl mb-4">{settings.groom_name} & {settings.bride_name}</p>
         <p className="font-body text-sm text-primary-foreground/60 tracking-widest uppercase mb-6">{dateStr}</p>
-        <div className="w-16 h-px bg-gold mx-auto mb-6" />
+        <div className="w-16 h-px mx-auto mb-6 bg-slate-100" />
         <p className="font-body text-xs text-primary-foreground/40 flex items-center justify-center gap-1">
           {settings.footer_text}
         </p>
