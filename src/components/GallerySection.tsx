@@ -51,7 +51,7 @@ const GallerySection = () => {
               transition={{ duration: 0.5, delay: i * 0.08 }}
               onClick={() => setSelected(photo.src)}
               className={`overflow-hidden group cursor-pointer ${photo.span}`}>
-              <img src={photo.src} alt={photo.alt} className="w-full h-48 md:h-64 object-cover transition-transform duration-700 group-hover:scale-110" />
+              <img src={photo.src} alt={photo.alt} className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-110" />
             </motion.button>
           ))}
         </div>
