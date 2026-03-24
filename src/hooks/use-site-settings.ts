@@ -32,7 +32,7 @@ export interface SiteSettings {
 const defaults: SiteSettings = {
   id: "",
   groom_name: "Cristiana",
-  bride_name: "Lucas",
+  bride_name: "Luccas",
   couple_initials: "C & L",
   wedding_date: "2026-06-13T16:00:00Z",
   story_quote: '"O amor não se olha um para o outro, mas juntos na mesma direção."',
