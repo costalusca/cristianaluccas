@@ -14,7 +14,7 @@ const VenueSection = () => {
           className="text-center mb-16">
           <p className="font-body text-sm uppercase tracking-[0.3em] text-muted-foreground mb-3">Onde será a celebração</p>
           <h2 className="font-display text-4xl md:text-5xl text-foreground">Local do Evento</h2>
-          <div className="w-16 h-px bg-gold mx-auto mt-6" />
+          <div className="w-16 h-px mx-auto mt-6 bg-primary" />
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto items-center">

@@ -40,7 +40,7 @@ const GallerySection = () => {
       <div className="container mx-auto px-6">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
           className="text-center mb-16">
-          <p className="font-body text-sm uppercase tracking-[0.3em] text-muted-foreground mb-3">Nossos momentos</p>
+          <p className="font-body text-sm uppercase tracking-[0.3em] text-muted-foreground mb-3">​</p>
           <h2 className="font-display text-4xl md:text-5xl text-foreground">Galeria</h2>
           <div className="w-16 h-px mx-auto mt-6 bg-navy" />
         </motion.div>
