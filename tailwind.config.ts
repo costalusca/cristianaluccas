@@ -15,6 +15,7 @@ export default {
     extend: {
       fontFamily: {
         display: ['"Playfair Display"', 'Georgia', 'serif'],
+        pinyon: ['"Pinyon Script"', 'cursive'],
         body: ['Lato', 'sans-serif'],
       },
       colors: {
