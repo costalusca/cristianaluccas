@@ -49,12 +49,12 @@ const HeroSection = () => {
         </motion.p>
 
         <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, delay: 0.3 }}
-          className="font-display text-6xl md:text-7xl lg:text-9xl text-primary-foreground mb-4 leading-[0.9]">
-          {settings.groom_name} <span className="font-display italic text-gold">&</span> {settings.bride_name}
+          className="font-pinyon text-6xl md:text-7xl lg:text-9xl text-primary-foreground mb-4 leading-[0.9]">
+          {settings.groom_name} <span className="font-pinyon italic text-gold">&</span> {settings.bride_name}
         </motion.h1>
 
         <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1, delay: 0.8 }}
-          className="w-32 h-px bg-gold mx-auto mb-6" />
+          className="w-32 h-px bg-navy mx-auto mb-6" />
 
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1 }}
           className="font-display text-xl md:text-2xl text-primary-foreground/90 italic mb-12">

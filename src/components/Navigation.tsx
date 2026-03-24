@@ -27,7 +27,7 @@ const Navigation = () => {
       isScrolled ? "bg-card/95 backdrop-blur-lg shadow-sm py-3" : "bg-transparent py-8"
     }`}>
       <div className="container mx-auto flex items-center justify-between px-6">
-        <a href="#inicio" className="font-display text-xl tracking-[0.15em] text-foreground">
+        <a href="#inicio" className="font-pinyon text-2xl text-foreground">
           {settings.couple_initials}
         </a>
         <ul className="hidden md:flex items-center gap-10">

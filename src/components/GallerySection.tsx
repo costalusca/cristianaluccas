@@ -45,13 +45,13 @@ const GallerySection = () => {
           <div className="w-16 h-px mx-auto mt-6 bg-navy" />
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-1 max-w-5xl mx-auto">
           {photos.map((photo, i) => (
             <motion.button key={i} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
               onClick={() => setSelected(photo.src)}
-              className={`overflow-hidden group cursor-pointer ${photo.span}`}>
-              <img src={photo.src} alt={photo.alt} className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-110" />
+              className="overflow-hidden group cursor-pointer aspect-square">
+              <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
             </motion.button>
           ))}
         </div>
