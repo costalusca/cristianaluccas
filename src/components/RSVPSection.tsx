@@ -56,7 +56,7 @@ const RSVPSection = () => {
           <h2 className="font-display text-4xl md:text-5xl text-foreground">
             Confirme sua Presença
           </h2>
-          <div className="w-16 h-px bg-gold mx-auto mt-6" />
+          <div className="w-16 h-px mx-auto mt-6 bg-navy" />
         </motion.div>
 
         <motion.form

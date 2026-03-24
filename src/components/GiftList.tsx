@@ -47,7 +47,7 @@ const GiftList = () => {
           <h2 className="font-display text-4xl md:text-5xl text-foreground">
             Lista de Presentes
           </h2>
-          <div className="w-16 h-px bg-gold mx-auto mt-6" />
+          <div className="w-16 h-px mx-auto mt-6 bg-navy" />
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">

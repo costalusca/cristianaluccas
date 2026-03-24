@@ -81,7 +81,7 @@ const HeroSection = () => {
         </motion.div>
 
         <motion.a href="#rsvp" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 1.5 }}
-          className="inline-block bg-gold/90 text-accent-foreground font-body text-xs uppercase tracking-[0.3em] px-12 py-5 hover:bg-gold transition-all duration-500 backdrop-blur-sm">
+          className="inline-block text-accent-foreground font-body text-xs uppercase tracking-[0.3em] px-12 py-5 transition-all duration-500 backdrop-blur-sm bg-slate-100">
           Confirmar Presença
         </motion.a>
       </div>
