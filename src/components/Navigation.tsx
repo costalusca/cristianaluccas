@@ -34,7 +34,7 @@ const Navigation = () => {
           {navItems.map((item) => (
             <li key={item.href}>
               <a href={item.href}
-                className="font-body text-[11px] uppercase tracking-[0.25em] text-foreground/60 hover:text-foreground transition-colors duration-500 relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-px after:bg-gold after:transition-all after:duration-500 hover:after:w-full">
+                className="font-body text-[11px] uppercase tracking-[0.25em] text-foreground/60 hover:text-foreground transition-colors duration-500 relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-px after:bg-[#F5F5F0] after:transition-all after:duration-500 hover:after:w-full">
                 {item.label}
               </a>
             </li>
