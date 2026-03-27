@@ -24,11 +24,11 @@ const VenueSection = () => {
               <h3 className="font-display text-2xl text-foreground mb-4">{settings.venue_name}</h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <MapPin size={18} className="text-gold mt-1 shrink-0" />
+                  <MapPin size={18} className="mt-1 shrink-0 border-navy text-slate-800" />
                   <p className="font-body text-muted-foreground whitespace-pre-line">{settings.venue_address}</p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Clock size={18} className="text-gold mt-1 shrink-0" />
+                  <Clock size={18} className="mt-1 shrink-0 bg-navy border-navy text-slate-800" />
                   <div className="font-body text-muted-foreground">
                     <p>Cerimônia: {settings.ceremony_time}</p>
                     <p>Festa: {settings.party_time}</p>
