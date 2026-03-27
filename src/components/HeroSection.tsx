@@ -14,9 +14,9 @@ const HeroSection = () => {
       if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
       return {
         days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((diff / (1000 * 60)) % 60),
-        seconds: Math.floor((diff / 1000) % 60),
+        hours: Math.floor(diff / (1000 * 60 * 60) % 24),
+        minutes: Math.floor(diff / (1000 * 60) % 60),
+        seconds: Math.floor(diff / 1000 % 60)
       };
     };
     setTimeLeft(calc());
@@ -44,32 +44,32 @@ const HeroSection = () => {
 
       <div className="relative z-10 text-center px-6 max-w-3xl">
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}
-          className="font-body text-sm uppercase tracking-[0.5em] text-primary-foreground/80 mb-6">
+        className="font-body text-sm uppercase tracking-[0.5em] text-primary-foreground/80 mb-6">
           {settings.welcome_text}
         </motion.p>
 
         <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, delay: 0.3 }}
-          className="font-pinyon text-6xl md:text-7xl lg:text-9xl text-primary-foreground mb-4 leading-[0.9]">
+        className="font-pinyon text-6xl md:text-7xl lg:text-9xl text-primary-foreground mb-4 leading-[0.9]">
           {settings.groom_name} <span className="font-pinyon text-primary-foreground">&</span> {settings.bride_name}
         </motion.h1>
 
         <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1, delay: 0.8 }}
-          className="w-32 h-px bg-navy mx-auto mb-6" />
+        className="w-32 h-px mx-auto mb-6 bg-primary-foreground" />
 
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1 }}
-          className="font-display text-xl md:text-2xl text-primary-foreground/90 italic mb-12">
+        className="font-display text-xl md:text-2xl text-primary-foreground/90 italic mb-12">
           {dateStr}
         </motion.p>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1.2 }}
-          className="flex justify-center gap-8 md:gap-12 mb-14">
+        className="flex justify-center gap-8 md:gap-12 mb-14">
           {[
-            { value: timeLeft.days, label: "Dias" },
-            { value: timeLeft.hours, label: "Horas" },
-            { value: timeLeft.minutes, label: "Min" },
-            { value: timeLeft.seconds, label: "Seg" },
-          ].map((item) => (
-            <div key={item.label} className="text-center">
+          { value: timeLeft.days, label: "Dias" },
+          { value: timeLeft.hours, label: "Horas" },
+          { value: timeLeft.minutes, label: "Min" },
+          { value: timeLeft.seconds, label: "Seg" }].
+          map((item) =>
+          <div key={item.label} className="text-center">
               <span className="block font-display text-4xl md:text-6xl text-primary-foreground tabular-nums">
                 {String(item.value).padStart(2, "0")}
               </span>
@@ -77,22 +77,22 @@ const HeroSection = () => {
                 {item.label}
               </span>
             </div>
-          ))}
+          )}
         </motion.div>
 
         <motion.a href="#rsvp" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 1.5 }}
-          className="inline-block text-accent-foreground font-body text-xs uppercase tracking-[0.3em] px-12 py-5 transition-all duration-500 backdrop-blur-sm bg-slate-100">
+        className="inline-block text-accent-foreground font-body text-xs uppercase tracking-[0.3em] px-12 py-5 transition-all duration-500 backdrop-blur-sm bg-slate-100">
           Confirmar Presença
         </motion.a>
       </div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2">
+      className="absolute bottom-8 left-1/2 -translate-x-1/2">
         <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2 }}
-          className="w-px h-12 bg-primary-foreground/30" />
+        className="w-px h-12 bg-primary-foreground/30" />
       </motion.div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default HeroSection;
