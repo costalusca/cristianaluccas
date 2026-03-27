@@ -58,7 +58,7 @@ const GiftList = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
-              className={`group border border-border p-8 text-center transition-all duration-300 hover:shadow-lg ${
+              className={`group border border-slate-900 bg-transparent text-navy p-8 text-center transition-all duration-300 hover:shadow-lg ${
                 gift.purchased ? "opacity-60" : "hover:border-gold"
               }`}
             >
