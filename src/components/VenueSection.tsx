@@ -28,7 +28,7 @@ const VenueSection = () => {
                   <p className="font-body text-muted-foreground whitespace-pre-line">{settings.venue_address}</p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Clock size={18} className="mt-1 shrink-0 bg-navy border-navy text-slate-800" />
+                  <Clock size={18} className="mt-1 shrink-0 border-slate-800 bg-primary text-primary" />
                   <div className="font-body text-muted-foreground">
                     <p>Cerimônia: {settings.ceremony_time}</p>
                     <p>Festa: {settings.party_time}</p>
