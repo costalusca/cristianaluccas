@@ -53,7 +53,7 @@ const RSVPSection = () => {
           <p className="font-body text-sm uppercase tracking-[0.3em] text-muted-foreground mb-3">
             Esperamos por você
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-foreground">
+          <h2 className="font-pinyon text-4xl md:text-5xl text-foreground">
             Confirme sua Presença
           </h2>
           <div className="w-16 h-px mx-auto mt-6 bg-navy" />
