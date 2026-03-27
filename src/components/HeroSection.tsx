@@ -54,7 +54,7 @@ const HeroSection = () => {
         </motion.h1>
 
         <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1, delay: 0.8 }}
-          className="w-32 h-px bg-navy mx-auto mb-6" />
+          className="w-32 h-px mx-auto mb-6 border-primary-foreground bg-primary-foreground" />
 
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1 }}
           className="font-display text-xl md:text-2xl text-primary-foreground/90 italic mb-12">

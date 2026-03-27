@@ -65,7 +65,7 @@ const GiftList = () => {
               <span className="text-4xl mb-4 block">{gift.icon || "🎁"}</span>
               <h3 className="font-display text-xl text-foreground mb-2">{gift.name}</h3>
               <p className="font-body text-sm text-muted-foreground mb-4">{gift.description}</p>
-              <p className="font-display text-2xl text-gold mb-6">
+              <p className="font-display text-2xl mb-6 text-primary">
                 R$ {Number(gift.value).toLocaleString("pt-BR")}
               </p>
 
