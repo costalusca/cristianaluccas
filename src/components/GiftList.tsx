@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Heart, Check, CreditCard, Copy, CheckCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import pixQrCode from "@/assets/pix-qrcode.png";
 import {
   Dialog,
   DialogContent,
@@ -132,13 +133,17 @@ const GiftList = () => {
           </DialogHeader>
 
           <div className="space-y-5 pt-2">
+            <div className="flex justify-center">
+              <img src={pixQrCode} alt="QR Code Pix" className="w-48 h-48 rounded-lg border border-border" />
+            </div>
+
             <div className="space-y-2">
               <p className="font-body text-sm text-muted-foreground">Beneficiário</p>
               <p className="font-body text-base font-medium text-foreground">{PIX_BENEFICIARY}</p>
             </div>
 
             <div className="space-y-2">
-              <p className="font-body text-sm text-muted-foreground">Chave Pix (e-mail)</p>
+              <p className="font-body text-sm text-muted-foreground">Chave Pix (telefone)</p>
               <div className="flex items-center gap-2">
                 <code className="flex-1 bg-muted px-3 py-2 rounded text-sm font-mono text-foreground break-all">
                   {PIX_KEY}
