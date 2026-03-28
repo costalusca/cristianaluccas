@@ -20,8 +20,8 @@ interface GiftItem {
   payment_url: string | null;
 }
 
-const PIX_KEY = "lcsdossantoscosta4@gmail.com";
-const PIX_BENEFICIARY = "Lucas";
+const PIX_KEY = "21988375483";
+const PIX_BENEFICIARY = "Cristiana e Luccas";
 
 const GiftList = () => {
   const [gifts, setGifts] = useState<GiftItem[]>([]);
