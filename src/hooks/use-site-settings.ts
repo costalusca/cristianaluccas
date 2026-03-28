@@ -42,7 +42,7 @@ const defaults: SiteSettings = {
   venue_address: "Alameda Jandira Fróes, 42 - São Francisco, Niterói - RJ, 24360-017",
   ceremony_time: "16h00",
   party_time: "18h00",
-  venue_map_url: "",
+  venue_map_url: "https://maps.app.goo.gl/nrj7bQqTX7mYpHmF7",
   venue_map_embed: "",
   hero_photo_url: null,
   couple_photo_url: null,
