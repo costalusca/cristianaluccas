@@ -19,6 +19,12 @@ const Footer = () => {
         <p className="font-body text-xs text-primary-foreground/40 flex items-center justify-center gap-1">
           {settings.footer_text}
         </p>
+        <a
+          href="/login"
+          className="inline-block mt-6 font-body text-[10px] text-primary-foreground/25 hover:text-primary-foreground/40 uppercase tracking-widest transition-colors"
+        >
+          Área dos Noivos
+        </a>
       </div>
     </footer>
   );
