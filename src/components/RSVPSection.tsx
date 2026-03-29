@@ -57,7 +57,7 @@ const RSVPSection = () => {
             Confirme sua Presença
           </h2>
           <p className="font-body text-sm md:text-base text-muted-foreground mt-4 max-w-lg mx-auto leading-relaxed">
-            Cada convidado deve preencher este formulário individualmente, mesmo em convites para casais ou famílias.
+            Cada convidado deve preencher este formulário individualmente, mesmo em caso de convites destinados a casais ou famílias.
           </p>
           <div className="w-16 h-px mx-auto mt-6 bg-navy" />
         </motion.div>
