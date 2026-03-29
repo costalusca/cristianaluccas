@@ -82,13 +82,12 @@ const GiftList = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {gifts.map((gift, i) => (
+            {gifts.slice(0, visibleCount).map((gift, i) => (
               <motion.div
                 key={gift.id}
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i >= visibleCount - LOAD_MORE_COUNT && i >= INITIAL_COUNT ? (i % LOAD_MORE_COUNT) * 0.05 : 0 }}
                 className={`group border border-slate-900 bg-transparent text-navy p-8 text-center transition-all duration-300 hover:shadow-lg ${
                   gift.purchased ? "opacity-60" : "hover:border-gold"
                 }`}
@@ -127,6 +126,21 @@ const GiftList = () => {
               </motion.div>
             ))}
           </div>
+
+          {!allVisible && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex justify-center mt-12"
+            >
+              <button
+                onClick={handleLoadMore}
+                className="font-body text-sm uppercase tracking-widest border border-foreground text-foreground px-8 py-3 hover:bg-foreground hover:text-background transition-colors duration-300"
+              >
+                {nearEnd ? "Ver todos" : "Ver mais presentes"}
+              </button>
+            </motion.div>
+          )}
         </div>
       </section>
 
