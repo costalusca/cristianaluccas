@@ -24,11 +24,15 @@ interface GiftItem {
 const PIX_KEY = "21988375483";
 const PIX_BENEFICIARY = "Cristiana e Luccas";
 
+const INITIAL_COUNT = 6;
+const LOAD_MORE_COUNT = 12;
+
 const GiftList = () => {
   const [gifts, setGifts] = useState<GiftItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [pixGift, setPixGift] = useState<GiftItem | null>(null);
   const [copied, setCopied] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
   useEffect(() => {
     const fetchGifts = async () => {
@@ -47,6 +51,13 @@ const GiftList = () => {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => Math.min(prev + LOAD_MORE_COUNT, gifts.length));
+  };
+
+  const allVisible = visibleCount >= gifts.length;
+  const nearEnd = visibleCount + LOAD_MORE_COUNT >= gifts.length;
 
   if (loading) return null;
 
