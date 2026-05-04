@@ -78,10 +78,13 @@ const GiftList = () => {
             <h2 className="font-display text-4xl md:text-5xl text-foreground">
               Lista de Presentes
             </h2>
-            <div className="w-16 h-px mx-auto mt-6 bg-navy" />
-          </motion.div>
+          <div className="w-16 h-px mx-auto mt-6 bg-navy" />
+          <p className="font-body text-sm md:text-base text-muted-foreground mt-8 max-w-2xl mx-auto leading-relaxed text-center italic">
+            Cada presente representa um gesto de carinho em forma de contribuição. Os valores recebidos serão usados pelo casal com amor, no que for mais importante neste novo começo.
+          </p>
+        </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {gifts.slice(0, visibleCount).map((gift, i) => (
               <motion.div
                 key={gift.id}
