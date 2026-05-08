@@ -40,7 +40,7 @@ const GiftList = () => {
         .from("gifts")
         .select("*")
         .order("value", { ascending: true });
-      if (!error && data) setGifts(data);
+      if (!error && data) setGifts(interleaveByValue(data));
       setLoading(false);
     };
     fetchGifts();
