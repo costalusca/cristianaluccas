@@ -39,7 +39,7 @@ const GiftList = () => {
       const { data, error } = await supabase
         .from("gifts")
         .select("*")
-        .order("created_at");
+        .order("value", { ascending: true });
       if (!error && data) setGifts(data);
       setLoading(false);
     };
@@ -80,7 +80,7 @@ const GiftList = () => {
             </h2>
           <div className="w-16 h-px mx-auto mt-6 bg-navy" />
           <p className="font-body text-sm md:text-base text-muted-foreground mt-8 max-w-2xl mx-auto leading-relaxed text-center italic">
-            Cada presente representa um gesto de carinho em forma de contribuição. Os valores recebidos serão usados pelo casal com amor, no que for mais importante neste novo começo.
+            Os presentes da lista são fictícios, e os valores carinhosamente recebidos serão destinados às prioridades deste novo começo.
           </p>
         </motion.div>
 

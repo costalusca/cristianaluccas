@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { LogOut, Users, Gift, Download, Check, X, Settings, Plus, Trash2, Upload, Save } from "lucide-react";
+import { LogOut, Users, Gift, Download, Check, X, Settings, Plus, Trash2, Upload, Save, GripVertical } from "lucide-react";
 import { toast } from "sonner";
 import type { TimelineEvent } from "@/hooks/use-site-settings";
 
@@ -64,6 +64,7 @@ const Admin = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
   const navigate = useNavigate();
 
   // New gift form
@@ -166,6 +167,14 @@ const Admin = () => {
       ...settings,
       gallery_photo_urls: settings.gallery_photo_urls.filter((_, i) => i !== index),
     });
+  };
+
+  const reorderGalleryPhoto = (from: number, to: number) => {
+    if (!settings || from === to) return;
+    const arr = [...settings.gallery_photo_urls];
+    const [moved] = arr.splice(from, 1);
+    arr.splice(to, 0, moved);
+    setSettings({ ...settings, gallery_photo_urls: arr });
   };
 
   const addTimelineEvent = () => {
@@ -479,8 +488,24 @@ const Admin = () => {
                 <label className={labelClass}>Fotos da Galeria</label>
                 <div className="grid grid-cols-3 md:grid-cols-6 gap-2 mb-3">
                   {settings.gallery_photo_urls.map((url, i) => (
-                    <div key={i} className="relative group">
-                      <img src={url} alt={`Galeria ${i + 1}`} className="w-full h-20 object-cover border border-border" />
+                    <div
+                      key={`${url}-${i}`}
+                      draggable
+                      onDragStart={() => setDragIndex(i)}
+                      onDragOver={(e) => e.preventDefault()}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        if (dragIndex !== null) reorderGalleryPhoto(dragIndex, i);
+                        setDragIndex(null);
+                      }}
+                      onDragEnd={() => setDragIndex(null)}
+                      className={`relative group cursor-move transition-opacity ${dragIndex === i ? "opacity-40" : ""}`}
+                      title="Arraste para reordenar"
+                    >
+                      <img src={url} alt={`Galeria ${i + 1}`} className="w-full h-20 object-cover border border-border pointer-events-none" />
+                      <div className="absolute top-1 left-1 bg-background/80 rounded p-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <GripVertical size={12} />
+                      </div>
                       <button onClick={() => removeGalleryPhoto(i)}
                         className="absolute top-1 right-1 bg-destructive text-destructive-foreground rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <X size={10} />
@@ -488,6 +513,7 @@ const Admin = () => {
                     </div>
                   ))}
                 </div>
+                <p className="font-body text-xs text-muted-foreground mb-2">Arraste as fotos para reorganizar a ordem. Não esqueça de salvar.</p>
                 <label className="inline-flex items-center gap-2 border border-border px-4 py-2 font-body text-sm cursor-pointer hover:border-foreground transition-colors">
                   <Plus size={14} /> Adicionar foto
                   <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && uploadGalleryPhoto(e.target.files[0])} />
