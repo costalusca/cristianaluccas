@@ -27,6 +27,25 @@ const PIX_BENEFICIARY = "Cristiana e Luccas";
 const INITIAL_COUNT = 6;
 const LOAD_MORE_COUNT = 12;
 
+// Reorganiza os presentes alternando faixas de valor (baixa, média, alta)
+// para evitar blocos seguidos de itens caros ou baratos.
+const interleaveByValue = (items: GiftItem[]): GiftItem[] => {
+  if (items.length <= 2) return items;
+  const sorted = [...items].sort((a, b) => Number(a.value) - Number(b.value));
+  const third = Math.ceil(sorted.length / 3);
+  const low = sorted.slice(0, third);
+  const mid = sorted.slice(third, third * 2);
+  const high = sorted.slice(third * 2);
+  const result: GiftItem[] = [];
+  const max = Math.max(low.length, mid.length, high.length);
+  for (let i = 0; i < max; i++) {
+    if (low[i]) result.push(low[i]);
+    if (mid[i]) result.push(mid[i]);
+    if (high[i]) result.push(high[i]);
+  }
+  return result;
+};
+
 const GiftList = () => {
   const [gifts, setGifts] = useState<GiftItem[]>([]);
   const [loading, setLoading] = useState(true);
