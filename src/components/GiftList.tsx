@@ -98,7 +98,7 @@ const GiftList = () => {
               Lista de Presentes
             </h2>
           <div className="w-16 h-px mx-auto mt-6 bg-navy" />
-          <p className="font-body text-sm md:text-base text-muted-foreground mt-8 max-w-2xl mx-auto leading-relaxed text-center italic">
+          <p className="font-body text-sm md:text-base text-muted-foreground mt-8 max-w-2xl mx-auto leading-relaxed text-center">
             Os presentes da lista são fictícios, e os valores carinhosamente recebidos serão destinados às prioridades deste novo começo.
           </p>
         </motion.div>
