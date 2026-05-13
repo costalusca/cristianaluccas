@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Heart, Check, CreditCard, Copy, CheckCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import pixQrCode from "@/assets/pix-qrcode.png";
 import {
   Dialog,
@@ -52,6 +53,11 @@ const GiftList = () => {
   const [pixGift, setPixGift] = useState<GiftItem | null>(null);
   const [copied, setCopied] = useState(false);
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
+  const [pixBuyerName, setPixBuyerName] = useState("");
+  const [pixSubmitting, setPixSubmitting] = useState(false);
+  const [cardConfirmGift, setCardConfirmGift] = useState<GiftItem | null>(null);
+  const [cardBuyerName, setCardBuyerName] = useState("");
+  const [cardSubmitting, setCardSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchGifts = async () => {
@@ -73,6 +79,58 @@ const GiftList = () => {
 
   const handleLoadMore = () => {
     setVisibleCount((prev) => Math.min(prev + LOAD_MORE_COUNT, gifts.length));
+  };
+
+  const registerNotification = async (
+    gift: GiftItem,
+    method: "pix" | "card",
+    buyerName: string,
+  ) => {
+    const { error } = await supabase.from("gift_notifications").insert({
+      gift_id: gift.id,
+      gift_name: gift.name,
+      gift_value: gift.value,
+      buyer_name: buyerName.trim() || null,
+      payment_method: method,
+    });
+    if (error) {
+      toast.error("Não foi possível registrar. Tente novamente.");
+      return false;
+    }
+    toast.success("Obrigado! Sua contribuição foi registrada com carinho. 💛");
+    return true;
+  };
+
+  const handlePixConfirm = async () => {
+    if (!pixGift) return;
+    setPixSubmitting(true);
+    const ok = await registerNotification(pixGift, "pix", pixBuyerName);
+    setPixSubmitting(false);
+    if (ok) {
+      setPixGift(null);
+      setPixBuyerName("");
+    }
+  };
+
+  const handleCardClick = (gift: GiftItem) => {
+    if (!gift.payment_url) return;
+    const url = gift.payment_url.startsWith("http")
+      ? gift.payment_url
+      : `https://${gift.payment_url}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+    setCardConfirmGift(gift);
+    setCardBuyerName("");
+  };
+
+  const handleCardConfirm = async () => {
+    if (!cardConfirmGift) return;
+    setCardSubmitting(true);
+    const ok = await registerNotification(cardConfirmGift, "card", cardBuyerName);
+    setCardSubmitting(false);
+    if (ok) {
+      setCardConfirmGift(null);
+      setCardBuyerName("");
+    }
   };
 
   const allVisible = visibleCount >= gifts.length;
@@ -128,14 +186,12 @@ const GiftList = () => {
                 ) : (
                   <div className="flex flex-col gap-3">
                     {gift.payment_url && (
-                      <a
-                        href={gift.payment_url.startsWith("http") ? gift.payment_url : `https://${gift.payment_url}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <button
+                        onClick={() => handleCardClick(gift)}
                         className="inline-flex items-center justify-center gap-2 bg-foreground text-background font-body text-sm uppercase tracking-widest px-6 py-3 hover:bg-foreground/90 transition-colors duration-300"
                       >
                         <CreditCard size={14} /> Pagar com Cartão
-                      </a>
+                      </button>
                     )}
                     <button
                       onClick={() => { setPixGift(gift); setCopied(false); }}
@@ -166,7 +222,7 @@ const GiftList = () => {
         </div>
       </section>
 
-      <Dialog open={!!pixGift} onOpenChange={(open) => !open && setPixGift(null)}>
+      <Dialog open={!!pixGift} onOpenChange={(open) => { if (!open) { setPixGift(null); setPixBuyerName(""); } }}>
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="font-display text-2xl text-center">
@@ -210,6 +266,73 @@ const GiftList = () => {
                 Após realizar o pagamento via Pix, pedimos que se identifique com seu nome para que possamos registrar o presente corretamente.
               </p>
             </div>
+
+            <div className="space-y-2 pt-2 border-t border-border">
+              <label className="font-body text-xs uppercase tracking-widest text-muted-foreground">
+                Seu nome (opcional)
+              </label>
+              <input
+                type="text"
+                value={pixBuyerName}
+                onChange={(e) => setPixBuyerName(e.target.value)}
+                placeholder="Como gostaria de se identificar"
+                className="w-full bg-transparent border border-border rounded px-3 py-2 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-foreground focus:outline-none transition-colors"
+              />
+              <button
+                onClick={handlePixConfirm}
+                disabled={pixSubmitting}
+                className="w-full inline-flex items-center justify-center gap-2 bg-foreground text-background font-body text-sm uppercase tracking-widest px-6 py-3 hover:bg-foreground/90 transition-colors duration-300 disabled:opacity-60"
+              >
+                <Check size={14} /> {pixSubmitting ? "Registrando..." : "Já realizei o pagamento"}
+              </button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={!!cardConfirmGift}
+        onOpenChange={(open) => { if (!open) { setCardConfirmGift(null); setCardBuyerName(""); } }}
+      >
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="font-display text-2xl text-center">
+              Confirmação do presente
+            </DialogTitle>
+            {cardConfirmGift && (
+              <DialogDescription className="text-center">
+                {cardConfirmGift.name} — R$ {Number(cardConfirmGift.value).toLocaleString("pt-BR")}
+              </DialogDescription>
+            )}
+          </DialogHeader>
+
+          <div className="space-y-5 pt-2">
+            <div className="bg-muted/50 border border-border rounded p-4">
+              <p className="font-body text-sm text-muted-foreground leading-relaxed">
+                Assim que concluir o pagamento na página externa, clique abaixo para que possamos registrar com carinho.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <label className="font-body text-xs uppercase tracking-widest text-muted-foreground">
+                Seu nome (opcional)
+              </label>
+              <input
+                type="text"
+                value={cardBuyerName}
+                onChange={(e) => setCardBuyerName(e.target.value)}
+                placeholder="Como gostaria de se identificar"
+                className="w-full bg-transparent border border-border rounded px-3 py-2 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-foreground focus:outline-none transition-colors"
+              />
+            </div>
+
+            <button
+              onClick={handleCardConfirm}
+              disabled={cardSubmitting}
+              className="w-full inline-flex items-center justify-center gap-2 bg-foreground text-background font-body text-sm uppercase tracking-widest px-6 py-3 hover:bg-foreground/90 transition-colors duration-300 disabled:opacity-60"
+            >
+              <Check size={14} /> {cardSubmitting ? "Registrando..." : "Já realizei o pagamento"}
+            </button>
           </div>
         </DialogContent>
       </Dialog>
