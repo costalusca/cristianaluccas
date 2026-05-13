@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { LogOut, Users, Gift, Download, Check, X, Settings, Plus, Trash2, Upload, Save, GripVertical } from "lucide-react";
+import { LogOut, Users, Gift, Download, Check, X, Settings, Plus, Trash2, Upload, Save, GripVertical, Bell, CreditCard, Heart } from "lucide-react";
 import { toast } from "sonner";
 import type { TimelineEvent } from "@/hooks/use-site-settings";
 
@@ -51,6 +51,18 @@ interface SiteSettingsData {
   footer_text: string;
 }
 
+interface GiftNotification {
+  id: string;
+  gift_id: string | null;
+  gift_name: string;
+  gift_value: number;
+  buyer_name: string | null;
+  buyer_message: string | null;
+  payment_method: "pix" | "card";
+  read: boolean;
+  created_at: string;
+}
+
 const inputClass =
   "w-full bg-transparent border border-border rounded px-3 py-2 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-foreground focus:outline-none transition-colors";
 
@@ -60,7 +72,8 @@ const Admin = () => {
   const [rsvps, setRsvps] = useState<RSVPResponse[]>([]);
   const [gifts, setGifts] = useState<GiftItem[]>([]);
   const [settings, setSettings] = useState<SiteSettingsData | null>(null);
-  const [tab, setTab] = useState<"rsvp" | "gifts" | "content">("rsvp");
+  const [notifications, setNotifications] = useState<GiftNotification[]>([]);
+  const [tab, setTab] = useState<"rsvp" | "gifts" | "notifications" | "content">("rsvp");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -85,13 +98,15 @@ const Admin = () => {
   }, [navigate]);
 
   const fetchData = async () => {
-    const [rsvpRes, giftsRes, settingsRes] = await Promise.all([
+    const [rsvpRes, giftsRes, settingsRes, notifRes] = await Promise.all([
       supabase.from("rsvp_responses").select("*").order("created_at", { ascending: false }),
       supabase.from("gifts").select("*").order("created_at"),
       supabase.from("site_settings").select("*").limit(1).single(),
+      supabase.from("gift_notifications").select("*").order("created_at", { ascending: false }),
     ]);
     if (rsvpRes.data) setRsvps(rsvpRes.data);
     if (giftsRes.data) setGifts(giftsRes.data);
+    if (notifRes.data) setNotifications(notifRes.data as GiftNotification[]);
     if (settingsRes.data) {
       setSettings({
         ...settingsRes.data,
@@ -100,6 +115,21 @@ const Admin = () => {
       });
     }
     setLoading(false);
+  };
+
+  const markNotificationRead = async (id: string, read: boolean) => {
+    const { error } = await supabase.from("gift_notifications").update({ read }).eq("id", id);
+    if (error) { toast.error("Erro ao atualizar."); return; }
+    setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read } : n)));
+  };
+
+  const markAllRead = async () => {
+    const ids = notifications.filter((n) => !n.read).map((n) => n.id);
+    if (ids.length === 0) return;
+    const { error } = await supabase.from("gift_notifications").update({ read: true }).in("id", ids);
+    if (error) { toast.error("Erro ao atualizar."); return; }
+    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+    toast.success("Todas marcadas como lidas.");
   };
 
   const handleLogout = async () => { await supabase.auth.signOut(); navigate("/login"); };
@@ -274,6 +304,7 @@ const Admin = () => {
           {[
             { id: "rsvp" as const, label: "Convidados", icon: Users },
             { id: "gifts" as const, label: "Presentes", icon: Gift },
+            { id: "notifications" as const, label: "Presentes Recebidos", icon: Bell },
             { id: "content" as const, label: "Conteúdo do Site", icon: Settings },
           ].map((t) => (
             <button key={t.id} onClick={() => setTab(t.id)}
@@ -281,6 +312,11 @@ const Admin = () => {
                 tab === t.id ? "border-foreground text-foreground" : "border-transparent text-muted-foreground"
               }`}>
               <t.icon size={14} className="inline mr-2" /> {t.label}
+              {t.id === "notifications" && notifications.filter((n) => !n.read).length > 0 && (
+                <span className="ml-2 inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-foreground text-background text-[10px] font-semibold">
+                  {notifications.filter((n) => !n.read).length}
+                </span>
+              )}
             </button>
           ))}
         </div>
@@ -423,6 +459,77 @@ const Admin = () => {
                 </div>
               ))}
             </div>
+          </>
+        )}
+
+        {/* Notifications Tab */}
+        {tab === "notifications" && (
+          <>
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <p className="font-body text-sm text-muted-foreground">
+                {notifications.length} {notifications.length === 1 ? "registro" : "registros"} —{" "}
+                {notifications.filter((n) => !n.read).length} não lidos
+              </p>
+              {notifications.some((n) => !n.read) && (
+                <button
+                  onClick={markAllRead}
+                  className="inline-flex items-center gap-2 border border-border px-4 py-2 font-body text-sm text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+                >
+                  <Check size={14} /> Marcar todas como lidas
+                </button>
+              )}
+            </div>
+
+            {notifications.length === 0 ? (
+              <div className="border border-border p-12 text-center">
+                <Bell size={32} className="mx-auto text-muted-foreground mb-3" />
+                <p className="font-body text-sm text-muted-foreground">
+                  Nenhuma confirmação de presente até o momento.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {notifications.map((n) => (
+                  <div
+                    key={n.id}
+                    className={`border p-4 md:p-5 flex flex-col md:flex-row md:items-center gap-3 md:gap-6 ${
+                      n.read ? "border-border bg-transparent" : "border-foreground bg-muted/20"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 md:w-32 shrink-0">
+                      {n.payment_method === "pix" ? (
+                        <Heart size={16} className="text-foreground" />
+                      ) : (
+                        <CreditCard size={16} className="text-foreground" />
+                      )}
+                      <span className="font-body text-xs uppercase tracking-widest text-muted-foreground">
+                        {n.payment_method === "pix" ? "Pix" : "Cartão"}
+                      </span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-display text-base text-foreground truncate">{n.gift_name}</p>
+                      <p className="font-body text-xs text-muted-foreground">
+                        {n.buyer_name ? `por ${n.buyer_name}` : "Sem identificação"}
+                      </p>
+                    </div>
+                    <div className="md:text-right shrink-0">
+                      <p className="font-display text-base text-foreground">
+                        R$ {Number(n.gift_value).toLocaleString("pt-BR")}
+                      </p>
+                      <p className="font-body text-xs text-muted-foreground">
+                        {new Date(n.created_at).toLocaleString("pt-BR")}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => markNotificationRead(n.id, !n.read)}
+                      className="font-body text-xs uppercase tracking-widest border border-border px-3 py-2 text-muted-foreground hover:text-foreground hover:border-foreground transition-colors shrink-0"
+                    >
+                      {n.read ? "Marcar não lida" : "Marcar lida"}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
           </>
         )}
 
