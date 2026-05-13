@@ -462,6 +462,77 @@ const Admin = () => {
           </>
         )}
 
+        {/* Notifications Tab */}
+        {tab === "notifications" && (
+          <>
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <p className="font-body text-sm text-muted-foreground">
+                {notifications.length} {notifications.length === 1 ? "registro" : "registros"} —{" "}
+                {notifications.filter((n) => !n.read).length} não lidos
+              </p>
+              {notifications.some((n) => !n.read) && (
+                <button
+                  onClick={markAllRead}
+                  className="inline-flex items-center gap-2 border border-border px-4 py-2 font-body text-sm text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+                >
+                  <Check size={14} /> Marcar todas como lidas
+                </button>
+              )}
+            </div>
+
+            {notifications.length === 0 ? (
+              <div className="border border-border p-12 text-center">
+                <Bell size={32} className="mx-auto text-muted-foreground mb-3" />
+                <p className="font-body text-sm text-muted-foreground">
+                  Nenhuma confirmação de presente até o momento.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {notifications.map((n) => (
+                  <div
+                    key={n.id}
+                    className={`border p-4 md:p-5 flex flex-col md:flex-row md:items-center gap-3 md:gap-6 ${
+                      n.read ? "border-border bg-transparent" : "border-foreground bg-muted/20"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 md:w-32 shrink-0">
+                      {n.payment_method === "pix" ? (
+                        <Heart size={16} className="text-foreground" />
+                      ) : (
+                        <CreditCard size={16} className="text-foreground" />
+                      )}
+                      <span className="font-body text-xs uppercase tracking-widest text-muted-foreground">
+                        {n.payment_method === "pix" ? "Pix" : "Cartão"}
+                      </span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-display text-base text-foreground truncate">{n.gift_name}</p>
+                      <p className="font-body text-xs text-muted-foreground">
+                        {n.buyer_name ? `por ${n.buyer_name}` : "Sem identificação"}
+                      </p>
+                    </div>
+                    <div className="md:text-right shrink-0">
+                      <p className="font-display text-base text-foreground">
+                        R$ {Number(n.gift_value).toLocaleString("pt-BR")}
+                      </p>
+                      <p className="font-body text-xs text-muted-foreground">
+                        {new Date(n.created_at).toLocaleString("pt-BR")}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => markNotificationRead(n.id, !n.read)}
+                      className="font-body text-xs uppercase tracking-widest border border-border px-3 py-2 text-muted-foreground hover:text-foreground hover:border-foreground transition-colors shrink-0"
+                    >
+                      {n.read ? "Marcar não lida" : "Marcar lida"}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
         {/* Content Tab */}
         {tab === "content" && settings && (
           <div className="space-y-10 max-w-3xl">
