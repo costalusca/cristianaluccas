@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      gift_notifications: {
+        Row: {
+          buyer_message: string | null
+          buyer_name: string | null
+          created_at: string
+          gift_id: string | null
+          gift_name: string
+          gift_value: number
+          id: string
+          payment_method: string
+          read: boolean
+        }
+        Insert: {
+          buyer_message?: string | null
+          buyer_name?: string | null
+          created_at?: string
+          gift_id?: string | null
+          gift_name: string
+          gift_value?: number
+          id?: string
+          payment_method: string
+          read?: boolean
+        }
+        Update: {
+          buyer_message?: string | null
+          buyer_name?: string | null
+          created_at?: string
+          gift_id?: string | null
+          gift_name?: string
+          gift_value?: number
+          id?: string
+          payment_method?: string
+          read?: boolean
+        }
+        Relationships: []
+      }
       gifts: {
         Row: {
           created_at: string
