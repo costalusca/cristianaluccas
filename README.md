@@ -1,271 +1,46 @@
-# Cristiana & Luccas
+# 💍 Site de Casamento & Painel Administrativo
 
-Crie um site de casamento completo, moderno e elegante para a Família João. O site deve ser responsivo (funcionar perfeitamente em celular, tablet e computador) e ter aparência sofisticada, semelhante a sites profissionais de casamento.
+> Plataforma web desenvolvida para gerenciar os detalhes de um casamento, incluindo confirmação de presença (RSVP), lista de presentes e painel administrativo protegido.
 
-Estilo visual
+[![Deploy na Vercel](https://img.shields.io/badge/status-online-success?style=for-the-badge&logo=vercel)](https://cristianaluccas.vercel.app)
+[![React](https://img.shields.io/badge/React-18.x-blue?style=for-the-badge&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-Backend-green?style=for-the-badge&logo=supabase)](https://supabase.com/)
 
-Paleta de cores principal:
+---
 
-Off-white (#F5F5F0) como cor de fundo
+## 🔗 Acesse o Projeto
+* **Aplicação ao vivo:** [cristianaluccas.vercel.app](https://cristianaluccas.vercel.app)
 
-Azul marinho (#0A1F44) como cor principal
+---
 
-Visual minimalista, romântico e sofisticado
+## 🚀 Sobre o Projeto
+Este projeto foi desenvolvido como uma solução completa e interativa para celebração de casamento. A aplicação conta com uma interface responsiva focada na experiência do usuário (UX), rotas protegidas para administração de dados e integração completa com banco de dados em tempo real.
 
-Tipografia elegante:
+---
 
-Títulos com fonte serifada sofisticada
+## 🛠️ Tecnologias Utilizadas
+* **Frontend:** React, TypeScript, Vite, Tailwind CSS, Lucide React
+* **Roteamento:** React Router DOM (com suporte a SPA na Vercel via `vercel.json`)
+* **Banco de Dados & Auth:** Supabase (PostgreSQL, Row Level Security)
+* **Hospedagem & CI/CD:** Vercel (com deploy contínuo via GitHub)
 
-Textos com fonte limpa e moderna
+---
 
-Animações suaves ao rolar a página
+## 📋 Funcionalidades Principales
+1. **Página Inicial Dinâmica:** Seções de história do casal, cronograma, galeria de fotos e local do evento.
+2. **Sistema de RSVP (Confirmação de Presença):** Envio de formulário conectado diretamente ao banco de dados.
+3. **Lista de Presentes:** Vitrine interativa de itens sugeridos.
+4. **Painel Administrativo (`/admin`):** Área restrita para visualização de confirmações e gestão do conteúdo.
+5. **Tratamento de Rotas 404:** Páginas de erro customizadas.
 
-Layout com bastante espaço em branco
+---
 
-Elementos delicados e elegantes típicos de casamentos
+## ⚙️ Como Executar o Projeto Localmente
 
-Estrutura do site
+Se você deseja clonar e rodar o projeto na sua máquina:
 
-1. Página inicial (Home)
-
-A primeira seção deve conter:
-
-Nome do casal
-
-Texto de boas-vindas
-
-Foto principal do casal
-
-Pequena história do casal
-
-Contador regressivo para o casamento
-
-Botão principal: Confirmar Presença (RSVP)
-
-Também incluir um menu de navegação com:
-
-Início
-
-Nossa História
-
-RSVP
-
-Lista de Presentes
-
-Local
-
-Galeria
-
-2. Nossa História
-
-Criar uma seção para contar a história do casal com:
-
-Texto editável
-
-Linha do tempo do relacionamento
-
-Fotos do casal
-
-Layout elegante estilo storytelling
-
-3. RSVP – Confirmação de Presença
-
-Criar um formulário completo para confirmação de presença.
-
-Campos:
-
-Nome completo
-
-Telefone / WhatsApp
-
-E-mail
-
-Endereço
-
-Quantidade de convidados
-
-Seleção:
-
-Vou ao casamento
-
-Não poderei comparecer
-
-Campo para mensagem aos noivos
-
-As respostas devem ser armazenadas em banco de dados.
-
-4. Lista de Presentes
-
-Criar uma lista de presentes moderna e interativa.
-
-Cada item deve ter:
-
-Nome do presente
-
-Descrição
-
-Valor
-
-Botão “Presentear”
-
-Exemplos de presentes:
-
-Ajuda para a lua de mel
-
-Jantar romântico
-
-Sofá da casa nova
-
-Geladeira
-
-Viagem especial
-
-Ao clicar em Presentear, o convidado deve poder pagar usando:
-
-Pix
-
-Cartão de crédito
-
-Cartão de débito
-
-Após o pagamento:
-
-O presente deve aparecer como “Presenteado”
-
-Evitar compras duplicadas
-
-5. Local da Cerimônia e Festa
-
-Criar uma seção com:
-
-Nome do local
-
-Endereço completo
-
-Horário da cerimônia
-
-Horário da festa
-
-Mapa integrado do Google Maps
-
-Botão “Abrir rota no Google Maps”
-
-6. Galeria de Fotos
-
-Criar uma galeria elegante com:
-
-Fotos do casal
-
-Layout estilo álbum de casamento
-
-Visual moderno tipo grid ou masonry
-
-Animação ao abrir fotos
-
-Painel Administrativo para os Noivos
-
-Criar uma área de login exclusiva para os noivos.
-
-Após login, deve existir um dashboard administrativo onde eles possam:
-
-Gerenciar convidados
-
-Ver lista de confirmações de presença
-
-Ver quem confirmou ou recusou
-
-Ver número total de convidados
-
-Gerenciar lista de presentes
-
-Adicionar presentes
-
-Editar presentes
-
-Remover presentes
-
-Ver quais já foram comprados
-
-Gerenciar conteúdo do site
-
-Editar textos
-
-Alterar fotos
-
-Alterar data do casamento
-
-Alterar horários
-
-Alterar local do evento
-
-Exportar dados
-
-Permitir exportar lista de convidados em CSV ou Excel.
-
-Integração de pagamentos
-
-Implementar suporte para:
-
-Pix (QR Code automático)
-
-Cartão de crédito
-
-Cartão de débito
-
-Após o pagamento:
-
-Registrar no banco de dados
-
-Marcar presente como comprado
-
-Tecnologias sugeridas
-
-Frontend: React ou Next.js
-
-Backend: Node.js
-
-Banco de dados: PostgreSQL ou Supabase
-
-Autenticação para área administrativa
-
-Integração de pagamentos (Stripe ou Mercado Pago)
-
-Objetivo do projeto
-
-Criar um site de casamento premium, elegante e funcional, onde os convidados possam:
-
-Confirmar presença
-
-Ver detalhes do evento
-
-Presentear os noivos
-
-Navegar por fotos e história do casal
-
-O sistema deve ser fácil de editar pelos noivos, sem necessidade de programação.
-
-This project was built with [Lovable](https://lovable.dev).
-
-**Live app**: https://cristianaluccas.lovable.app
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/b91d0a5d-8bd9-4086-b0dd-5a623a60d0bb).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
-
-
-Site publicado na Vercel: https://cristianaluccas.vercel.app
+1. **Clone o repositório:**
+   ```bash
+   git clone [https://github.com/costalusca/cristianaluccas.git](https://github.com/costalusca/cristianaluccas.git)
+   cd cristianaluccas
