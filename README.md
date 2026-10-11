@@ -268,4 +268,4 @@ npm run dev
 ```
 
 
-Anotações: repositório clonado e rodando localmente com sucesso.
+Site publicado na Vercel: https://cristianaluccas.vercel.app
