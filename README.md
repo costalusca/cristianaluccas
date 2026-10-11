@@ -266,3 +266,6 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+
+Anotações: repositório clonado e rodando localmente com sucesso.
