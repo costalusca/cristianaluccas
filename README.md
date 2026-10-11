@@ -1,73 +1,268 @@
-# Welcome to your Lovable project
+# Cristiana & Luccas
 
-## Project info
+Crie um site de casamento completo, moderno e elegante para a Família João. O site deve ser responsivo (funcionar perfeitamente em celular, tablet e computador) e ter aparência sofisticada, semelhante a sites profissionais de casamento.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Estilo visual
 
-## How can I edit this code?
+Paleta de cores principal:
 
-There are several ways of editing your application.
+Off-white (#F5F5F0) como cor de fundo
 
-**Use Lovable**
+Azul marinho (#0A1F44) como cor principal
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Visual minimalista, romântico e sofisticado
 
-Changes made via Lovable will be committed automatically to this repo.
+Tipografia elegante:
 
-**Use your preferred IDE**
+Títulos com fonte serifada sofisticada
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Textos com fonte limpa e moderna
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Animações suaves ao rolar a página
 
-Follow these steps:
+Layout com bastante espaço em branco
+
+Elementos delicados e elegantes típicos de casamentos
+
+Estrutura do site
+
+1. Página inicial (Home)
+
+A primeira seção deve conter:
+
+Nome do casal
+
+Texto de boas-vindas
+
+Foto principal do casal
+
+Pequena história do casal
+
+Contador regressivo para o casamento
+
+Botão principal: Confirmar Presença (RSVP)
+
+Também incluir um menu de navegação com:
+
+Início
+
+Nossa História
+
+RSVP
+
+Lista de Presentes
+
+Local
+
+Galeria
+
+2. Nossa História
+
+Criar uma seção para contar a história do casal com:
+
+Texto editável
+
+Linha do tempo do relacionamento
+
+Fotos do casal
+
+Layout elegante estilo storytelling
+
+3. RSVP – Confirmação de Presença
+
+Criar um formulário completo para confirmação de presença.
+
+Campos:
+
+Nome completo
+
+Telefone / WhatsApp
+
+E-mail
+
+Endereço
+
+Quantidade de convidados
+
+Seleção:
+
+Vou ao casamento
+
+Não poderei comparecer
+
+Campo para mensagem aos noivos
+
+As respostas devem ser armazenadas em banco de dados.
+
+4. Lista de Presentes
+
+Criar uma lista de presentes moderna e interativa.
+
+Cada item deve ter:
+
+Nome do presente
+
+Descrição
+
+Valor
+
+Botão “Presentear”
+
+Exemplos de presentes:
+
+Ajuda para a lua de mel
+
+Jantar romântico
+
+Sofá da casa nova
+
+Geladeira
+
+Viagem especial
+
+Ao clicar em Presentear, o convidado deve poder pagar usando:
+
+Pix
+
+Cartão de crédito
+
+Cartão de débito
+
+Após o pagamento:
+
+O presente deve aparecer como “Presenteado”
+
+Evitar compras duplicadas
+
+5. Local da Cerimônia e Festa
+
+Criar uma seção com:
+
+Nome do local
+
+Endereço completo
+
+Horário da cerimônia
+
+Horário da festa
+
+Mapa integrado do Google Maps
+
+Botão “Abrir rota no Google Maps”
+
+6. Galeria de Fotos
+
+Criar uma galeria elegante com:
+
+Fotos do casal
+
+Layout estilo álbum de casamento
+
+Visual moderno tipo grid ou masonry
+
+Animação ao abrir fotos
+
+Painel Administrativo para os Noivos
+
+Criar uma área de login exclusiva para os noivos.
+
+Após login, deve existir um dashboard administrativo onde eles possam:
+
+Gerenciar convidados
+
+Ver lista de confirmações de presença
+
+Ver quem confirmou ou recusou
+
+Ver número total de convidados
+
+Gerenciar lista de presentes
+
+Adicionar presentes
+
+Editar presentes
+
+Remover presentes
+
+Ver quais já foram comprados
+
+Gerenciar conteúdo do site
+
+Editar textos
+
+Alterar fotos
+
+Alterar data do casamento
+
+Alterar horários
+
+Alterar local do evento
+
+Exportar dados
+
+Permitir exportar lista de convidados em CSV ou Excel.
+
+Integração de pagamentos
+
+Implementar suporte para:
+
+Pix (QR Code automático)
+
+Cartão de crédito
+
+Cartão de débito
+
+Após o pagamento:
+
+Registrar no banco de dados
+
+Marcar presente como comprado
+
+Tecnologias sugeridas
+
+Frontend: React ou Next.js
+
+Backend: Node.js
+
+Banco de dados: PostgreSQL ou Supabase
+
+Autenticação para área administrativa
+
+Integração de pagamentos (Stripe ou Mercado Pago)
+
+Objetivo do projeto
+
+Criar um site de casamento premium, elegante e funcional, onde os convidados possam:
+
+Confirmar presença
+
+Ver detalhes do evento
+
+Presentear os noivos
+
+Navegar por fotos e história do casal
+
+O sistema deve ser fácil de editar pelos noivos, sem necessidade de programação.
+
+This project was built with [Lovable](https://lovable.dev).
+
+**Live app**: https://cristianaluccas.lovable.app
+
+## Build with Lovable
+
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/b91d0a5d-8bd9-4086-b0dd-5a623a60d0bb).
+
+- **Ship faster**: describe what you want to build and Lovable handles the code.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+
+## Development
+
+Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
+git clone <this-repository-url>
+cd <repository-name>
 npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
